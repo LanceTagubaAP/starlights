@@ -1,7 +1,7 @@
 // src/Navbar.js
 import React, { useState } from 'react';
 import Logo from '../Logo/Logo';
-import { FaSearch, FaUserCircle } from 'react-icons/fa'; // Import search and user icons
+import { FaSearch, FaUserCircle, FaShoppingCart } from 'react-icons/fa'; // Import necessary icons
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -44,9 +44,11 @@ const Navbar = () => {
           </ul>
         </div>
 
-        {/* Login Icon */}
-        <div className="hidden md:flex items-center">
+        {/* Login and Cart Icons */}
+        <div className="hidden md:flex items-center space-x-4">
+          <FaShoppingCart className="text-2xl text-gray-500 hover:text-blue-500 cursor-pointer" />
           <FaUserCircle className="text-2xl text-gray-500 hover:text-blue-500 cursor-pointer" />
+
         </div>
       </div>
 
@@ -71,8 +73,9 @@ const Navbar = () => {
         </ul>
 
         {/* Mobile Login Icon */}
-        <div className="flex justify-end px-4 py-2">
+        <div className="flex justify-end px-4 py-2 space-x-4">
           <FaUserCircle className="text-2xl text-gray-500 hover:text-blue-500 cursor-pointer" />
+          <FaShoppingCart className="text-2xl text-gray-500 hover:text-blue-500 cursor-pointer" />
         </div>
       </div>
     </nav>
