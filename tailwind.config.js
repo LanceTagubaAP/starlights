@@ -4,7 +4,12 @@ export default {
     './src/**/*.{js,jsx,ts,tsx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'gloria': ['"Gloria Hallelujah"', 'cursive'], // Custom font
+      },
+      
+    },
   },
   plugins: [],
 }
