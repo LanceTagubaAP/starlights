@@ -4,5 +4,7 @@ This is my current personal project building a KPOP lightstick webshop
 
 
 
-## Expanding the ESLint configuration
+## Frontend
+
+Frontend is built in React.
 
