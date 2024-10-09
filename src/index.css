@@ -1,11 +1,21 @@
+@import 'slick-carousel/slick/slick.css';
+@import 'slick-carousel/slick/slick-theme.css';
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 
+
+
 /* src/index.css */
 
 /* src/index.css */
+
+/* Import slick carousel styles */
+
+
 
 html, body {
     height: 100%; /* Ensure the body takes the full height of the viewport */
