@@ -1,73 +1,64 @@
-// src/components/Carousel.tsx
-import React from 'react';
-import Slider from 'react-slick';
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import React, { useState } from "react";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
-const lightsticks = [
-  {
-    id: 1,
-    name: "Lightstick A",
-    image: "https://example.com/lightstick-a.jpg", // Replace with your lightstick image URL
-  },
-  {
-    id: 2,
-    name: "Lightstick B",
-    image: "https://example.com/lightstick-b.jpg", // Replace with your lightstick image URL
-  },
-  {
-    id: 3,
-    name: "Lightstick C",
-    image: "https://example.com/lightstick-c.jpg", // Replace with your lightstick image URL
-  },
-  // Add more lightsticks as needed
-];
+interface CarouselProps {
+  data: { src: string; alt: string }[];
+}
 
-const Carousel: React.FC = () => {
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    nextArrow: <Arrow direction="next" />,
-    prevArrow: <Arrow direction="prev" />,
+const Carousel: React.FC<CarouselProps> = ({ data }) => {
+  const [slide, setSlide] = useState(0);
+
+  const nextSlide = () => {
+    setSlide((prevSlide) => (prevSlide === data.length - 1 ? 0 : prevSlide + 1));
+  };
+
+  const prevSlide = () => {
+    setSlide((prevSlide) => (prevSlide === 0 ? data.length - 1 : prevSlide - 1));
   };
 
   return (
-    <div className="w-full py-8">
-      <h2 className="text-center text-2xl font-bold mb-4">Our Lightsticks</h2>
-      <Slider {...settings}>
-        {lightsticks.map((lightstick) => (
-          <div key={lightstick.id} className="flex flex-col items-center">
-            <img
-              src={lightstick.image}
-              alt={lightstick.name}
-              className="w-64 h-64 object-cover rounded-lg mb-2"
-            />
-            <span className="text-lg font-semibold">{lightstick.name}</span>
-          </div>
+    <div className="relative w-full max-w-md mx-auto overflow-hidden">
+      {/* Previous Button */}
+      <div
+        onClick={prevSlide}
+        className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-700 cursor-pointer z-10"
+      >
+        <FaArrowLeft size={15} />
+      </div>
+
+      <div className="relative w-full">
+        {data.map((item, idx) => (
+          <img
+            src={item.src}
+            alt={item.alt}
+            key={idx}
+            className={`w-full transition-opacity duration-500 ease-in-out ${
+              slide === idx ? "opacity-100" : "opacity-0 absolute top-0 left-0"
+            }`}
+          />
         ))}
-      </Slider>
-    </div>
-  );
-};
+      </div>
 
-// Extend the props to include className and other necessary attributes
-interface ArrowProps extends React.HTMLProps<HTMLDivElement> {
-  direction: 'next' | 'prev';
-}
-
-const Arrow: React.FC<ArrowProps> = ({ direction, ...props }) => {
-  const isNext = direction === 'next';
-  return (
-    <div
-      {...props}
-      className={`${
-        props.className || ''
-      } text-gray-700 bg-white rounded-full shadow-lg p-2 cursor-pointer`}
-      style={{ display: 'block' }}
-    >
-      {isNext ? <FaArrowRight /> : <FaArrowLeft />}
+      {/* Next Button */}
+      <div
+        onClick={nextSlide}
+        className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-700 cursor-pointer z-10"
+      >
+        <FaArrowRight size={15} />
+      </div>
+      
+      {/* Indicators */}
+      <span className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+        {data.map((_, idx) => (
+          <button
+            key={idx}
+            className={`w-2 h-2 rounded-full ${
+              slide === idx ? "bg-gray-700" : "bg-gray-300"
+            }`}
+            onClick={() => setSlide(idx)}
+          ></button>
+        ))}
+      </span>
     </div>
   );
 };
